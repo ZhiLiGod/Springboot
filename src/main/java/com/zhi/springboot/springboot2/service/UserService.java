@@ -2,6 +2,8 @@ package com.zhi.springboot.springboot2.service;
 
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -21,5 +23,7 @@ public interface UserService {
 	
 	@Transactional
 	public void addUser(User user) throws Exception;
+	
+	public Page<User> findAllUsers(Pageable pageable) throws Exception;
 	
 }

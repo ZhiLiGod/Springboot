@@ -74,7 +74,23 @@
             <artifactId>druid</artifactId>
             <version>1.0.20</version>
         </dependency> 
- 		
+        
+ 		<!-- spring security -->
+ 		<dependency>
+            <groupId>org.thymeleaf.extras</groupId>
+            <artifactId>thymeleaf-extras-springsecurity4</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-security</artifactId>
+        </dependency>
+        <!-- jwt support -->
+        <!-- https://mvnrepository.com/artifact/io.jsonwebtoken/jjwt -->  
+        <dependency>  
+            <groupId>io.jsonwebtoken</groupId>  
+            <artifactId>jjwt</artifactId>  
+            <version>0.9.0</version>  
+        </dependency>  
 	</dependencies>
 
 	<build>

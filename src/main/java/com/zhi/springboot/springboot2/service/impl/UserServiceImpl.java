@@ -3,6 +3,8 @@ package com.zhi.springboot.springboot2.service.impl;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.zhi.springboot.springboot2.dao.UserDao;
@@ -34,5 +36,10 @@ public class UserServiceImpl implements UserService{
 	@Override
 	public void addUser(User user) throws Exception {
 		userDao.save(user);
+	}
+
+	@Override
+	public Page<User> findAllUsers(Pageable pageable) throws Exception {
+		return userDao.findAll(pageable);
 	}
 }
