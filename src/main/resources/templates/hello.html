@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Hello world</title>
+    <link rel="stylesheet" th:href="@{css/bootstrap.min.css}"/>
+    <link rel="stylesheet" th:href="@{css/signin.css}"/>
+</head>
+<body>
+	<h1 th:text="'Hello, '+${name}"></h1>
+	<table>
+		<tr>
+			<th>Name</th>
+			<th>Age</th>
+			<th>DOB</th>
+			<th>Old</th>
+		</tr>
+		<tr th:each="user: ${users}">
+			<td th:text="${user.username}"></td>
+			<td th:text="${user.age}"></td>
+			<td th:text="${#dates.format(user.DOB, 'yyyy-MM-dd')}"></td>
+			<td th:if="${user.age gt 30}">Yes</td>
+			<td th:if="${user.age lt 30}">No</td>
+			<td th:if="${user.age eq 30}">old</td>
+		</tr>
+	</table>
+</body>
+</html>

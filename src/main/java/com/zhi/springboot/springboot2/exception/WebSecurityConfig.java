@@ -65,7 +65,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity httpSecurity) throws Exception {  
 		 httpSecurity  
          // 由于使用的是JWT，我们这里不需要csrf  
-         .csrf().disable()  
+         //.csrf().disable()  
          // 基于token，所以不需要session  
          .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()  
          .authorizeRequests()  
@@ -83,16 +83,16 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
          // 对于获取token的rest api要允许匿名访问  
          .antMatchers("/auth/**").permitAll()  
          .antMatchers("/admin/**").hasIpAddress("127.0.0.1")  
-         .antMatchers("/admin/**").access("hasAuthority('ROLE_ADMIN')")  
+         .antMatchers("/admin/**").access("hasAuthority('ROLE_ADMIN')") ; 
 //         .anyRequest().authenticated().and().formLogin().loginPage("/login")  
 //         .failureUrl("/login?error").permitAll().and().logout().permitAll();  
 		 // 除上面外的所有请求全部需要鉴权认证  
-		         .anyRequest().authenticated();  
+//		         .anyRequest().authenticated();  
 		 // 添加JWT filter  
-		 httpSecurity  
-		         .addFilterBefore(authenticationTokenFilterBean(), UsernamePasswordAuthenticationFilter.class);  
+//		 httpSecurity  
+//		         .addFilterBefore(authenticationTokenFilterBean(), UsernamePasswordAuthenticationFilter.class);  
 		 // 禁用缓存  
-		 httpSecurity.headers().cacheControl();  
+//		 httpSecurity.headers().cacheControl();  
     }  
 	
 }
