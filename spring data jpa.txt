@@ -1,0 +1,119 @@
+ //And --- 等价于 SQL 中的 and 关键字，比如 findByHeightAndSex(int height,char sex)；  
+ public List<User> findByHeightAndSex(int height,char sex);  
+  
+// Or --- 等价于 SQL 中的 or 关键字，比如 findByHeightOrSex(int height,char sex)；  
+ public List<User> findByHeightOrSex(int height,char sex);  
+  
+ //Between --- 等价于 SQL 中的 between 关键字，比如 findByHeightBetween(int min, int max)；  
+ public List<User> findByHeightBetween(int min,int max);  
+  
+ //LessThan --- 等价于 SQL 中的 "<"，比如 findByHeightLessThan(int max)；  
+ public List<User> findByHeightLessThan(int max);  
+  
+ //GreaterThan --- 等价于 SQL 中的">"，比如 findByHeightGreaterThan(int min)；  
+ public List<User> findByHeightGreaterThan(int min);  
+  
+ //IsNull --- 等价于 SQL 中的 "is null"，比如 findByNameIsNull()；  
+ public List<User> findByNameIsNull();  
+  
+ //IsNotNull --- 等价于 SQL 中的 "is not null"，比如 findByNameIsNotNull()；  
+ public List<User> findByNameIsNotNull();  
+  
+ //NotNull --- 与 IsNotNull 等价；  
+ public List<User> findByNameNotNull();  
+  
+ //Like --- 等价于 SQL 中的 "like"，比如 findByNameLike(String name);  
+ public List<User> findByNameLike(String name);  
+  
+ //NotLike --- 等价于 SQL 中的 "not like"，比如 findByNameNotLike(String name)；  
+ public List<User> findByNameNotLike(String name);  
+  
+ //OrderBy --- 等价于 SQL 中的 "order by"，比如 findByNameNotNullOrderByHeightAsc()；  
+ public List<User>findByNameNotNullOrderByHeightAsc();  
+  
+ //Not --- 等价于 SQL 中的 "！ ="，比如 findByNameNot(String name)；  
+ public List<User> findByNameNot(String name);  
+  
+ //In --- 等价于 SQL 中的 "in"，比如 findByNameIN(String name);  
+ public List<User> findByNameIn(String name);  
+  
+ //NotIn --- 等价于 SQL 中的 "not in"，比如 findByNameNotIN(String name);  
+ public List<User> findByNameNotIn(String name); 
+
+ //利用原生的SQL进行查询操作  
+@Query(value = "select o.* from orders o ,user u where o.uid=u.id and u.name=?1", nativeQuery = true)  
+@Modifying  
+public List<Order> findOrderByName(String name);  
+
+//利用原生的SQL进行删除操作  
+@Query(value = "delete from orders where id=?1 ", nativeQuery = true)  
+@Modifying  
+public void deleteOrderById(int id);  
+
+//利用原生的SQL进行删除操作  
+@Query(value = "delete from orders where uid=?1 ", nativeQuery = true)  
+@Modifying  
+public void deleteOrderByUId(int uid);  
+
+//利用原生的SQL进行修改操作  
+@Query(value = "update orders set name=?1 where id=?2 ", nativeQuery = true)  
+@Modifying  
+public void updateOrderName(String name,int id);  
+
+//利用原生的SQL进行插入操作  
+@Query(value = "insert into orders(name,uid) value(?1,?2)", nativeQuery = true)  
+@Modifying  
+public void insertOrder(String name,int uid);  
+
+
+Redis
+目录下运行 redis-server redis.windows.conf
+
+
+CascadeType.REFRESH：级联刷新，当多个用户同时作操作一个实体，为了用户取到的数据是实时的，在用实体中的数据之前就可以调用一下refresh()方法！
+ 
+CascadeType.REMOVE：级联删除，当调用remove()方法删除Order实体时会先级联删除OrderItem的相关数据！
+ 
+CascadeType.MERGE：级联更新，当调用了Merge()方法，如果Order中的数据改变了会相应的更新OrderItem中的数据，
+ 
+CascadeType.ALL：包含以上所有级联属性。
+ 
+（注：以上几种级联操作，只能实在满足数据库的约束时才能生效，比如上边的Order和OrderItem存在主外键关联所以执行REMOVE()方法时是不能实现级联删除的）
+CascadeType.PERSIST：级联保存，当调用了Persist() 方法，会级联保存相应的数据
+
+
+
+1.首先当我们要自定义Spring Security的时候我们需要继承自WebSecurityConfigurerAdapter来完成，相关配置重写对应 方法即可。 
+2.我们在这里注册CustomUserService的Bean，然后通过重写configure方法添加我们自定义的认证方式。 
+3.在configure(HttpSecurity http)方法中，我们设置了登录页面，而且登录页面任何人都可以访问，然后设置了登录失败地址，也设置了注销请求，注销请求也是任何人都可以访问的。 
+4.permitAll表示该请求任何人都可以访问，.anyRequest().authenticated(),表示其他的请求都必须要有权限认证。 
+5.这里我们可以通过匹配器来匹配路径，比如antMatchers方法，假设我要管理员才可以访问admin文件夹下的内容，我可以这样来写：.antMatchers("/admin/**").hasRole("ROLE_ADMIN")，也可以设置admin文件夹下的文件可以有多个角色来访问，写法如下：.antMatchers("/admin/**").hasAnyRole("ROLE_ADMIN","ROLE_USER") 
+6.可以通过hasIpAddress来指定某一个ip可以访问该资源,假设只允许访问ip为210.210.210.210的请求获取admin下的资源，写法如下.antMatchers("/admin/**").hasIpAddress("210.210.210.210") 
+7.更多的权限控制方式参看下表： 
+这里写图片描述 
+8.这里我们还可以做更多的配置，参考如下代码：
+http.authorizeRequests()
+                .anyRequest().authenticated()
+                .and().formLogin().loginPage("/login")
+                //设置默认登录成功跳转页面
+                .defaultSuccessUrl("/index").failureUrl("/login?error").permitAll()
+                .and()
+                //开启cookie保存用户数据
+                .rememberMe()
+                //设置cookie有效期
+                .tokenValiditySeconds(60 * 60 * 24 * 7)
+                //设置cookie的私钥
+                .key("")
+                .and()
+                .logout()
+                //默认注销行为为logout，可以通过下面的方式来修改
+                .logoutUrl("/custom-logout")
+                //设置注销成功后跳转页面，默认是跳转到登录页面
+                .logoutSuccessUrl("")
+                .permitAll();
+
+
+
+<html xmlns:th="http://www.thymeleaf.org">
+
+private Logger logger = LoggerFactory.getLogger(this.getClass());
