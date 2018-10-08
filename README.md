@@ -1,24 +1,24 @@
 # Springboot
 
- //And findByHeightAndSex(int height,char sex)£»  
+ //And findByHeightAndSex(int height,char sex)Â£Â»  
  public List<User> findByHeightAndSex(int height,char sex);  
   
-// Or findByHeightOrSex(int height,char sex)£»  
+// Or findByHeightOrSex(int height,char sex)Â£Â»  
  public List<User> findByHeightOrSex(int height,char sex);  
   
- //Between findByHeightBetween(int min, int max)£»  
+ //Between findByHeightBetween(int min, int max)Â£Â»  
  public List<User> findByHeightBetween(int min,int max);  
   
- //LessThan findByHeightLessThan(int max)£»  
+ //LessThan findByHeightLessThan(int max)Â£Â»  
  public List<User> findByHeightLessThan(int max);  
   
- //GreaterThan findByHeightGreaterThan(int min)£»  
+ //GreaterThan findByHeightGreaterThan(int min)Â£Â»  
  public List<User> findByHeightGreaterThan(int min);  
   
- //IsNull findByNameIsNull()£»  
+ //IsNull findByNameIsNull()Â£Â»  
  public List<User> findByNameIsNull();  
   
- //IsNotNull findByNameIsNotNull()£»  
+ //IsNotNull findByNameIsNotNull()Â£Â»  
  public List<User> findByNameIsNotNull();  
   
  //NotNull 
@@ -27,13 +27,15 @@
  //Like findByNameLike(String name);  
  public List<User> findByNameLike(String name);  
   
- //NotLike findByNameNotLike(String name)£»  
- public List<User> findByNameNotLike(String name);  
+ //NotLike findByNameNotLike(String name)Â£Â»  
+ public List<User> findByNameNotLike(String name); 
+ 
+ List<Registration> findByPlaceIgnoreCaseContaining(String place);
   
- //OrderBy findByNameNotNullOrderByHeightAsc()£»  
+ //OrderBy findByNameNotNullOrderByHeightAsc()Â£Â»  
  public List<User>findByNameNotNullOrderByHeightAsc();  
   
- //Not findByNameNot(String name)£»  
+ //Not findByNameNot(String name)Â£Â»  
  public List<User> findByNameNot(String name);  
   
  //In findByNameIN(String name);  
