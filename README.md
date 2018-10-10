@@ -67,3 +67,6 @@ public void insertOrder(String name,int uid);
 
 Redis
 redis dir run: redis-server redis.windows.conf
+
+netstat -ano | findstr :4200
+taskkill /PID 15940 /F
